@@ -1,27 +1,18 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import NavBar from './NavBar'
+import axios from 'axios'
 
 const ViewPost = () => {
-  const [data,setdata]=useState(
-
-    [
-        {"postid":102,"name":"sree","type":"speed"},
-        {"postid":103,"name":"priya","type":"logistics"},
-        {"postid":104,"name":"anna","type":"expree"},
-        {"postid":105,"name":"sreya","type":"speed"},
-        {"postid":106,"name":"anu","type":"logistics"},
-        {"postid":107,"name":"ananya","type":"media"},
-        {"postid":108,"name":"hari","type":"speed"},
-        {"postid":109,"name":"rohith","type":"express"},
-        {"postid":110,"name":"amal","type":"speed"},
-        {"postid":111,"name":"neha","type":"media"},
-        {"postid":112,"name":"niya","type":"logistics"},
-        {"postid":113,"name":"anet","type":"speed"},
-        {"postid":115,"name":"sreedevi","type":"express"}
-    ]
-
-
-  )
+  const [data,setdata]=useState([])
+  const fetchData=() => {
+    axios.get("https://jsonplaceholder.typicode.com/posts").then(
+      (response)=>{
+        console.log(response.data)
+        setdata(response.data)
+      }
+    ).catch().finally()
+  }
+    useEffect(()=>fetchData(),[])
     return (
     <div>
       <NavBar/>
@@ -32,25 +23,26 @@ const ViewPost = () => {
                 <table class="table" border="3">
   <thead>
     <tr>
-      <th scope="col">POST ID</th>
-      <th scope="col">NAME</th>
-      <th scope="col">TYPE OF POST</th>
+      <th scope="col">USER ID</th>
+      <th scope="col">ID</th>
+      <th scope="col">TITLE</th>
     </tr>
   </thead>
+  <tbody>
  {data.map(
   (value, index) => {
-    return  <tbody>
-    <tr>
-      <td>{value.postid}</td>
-      <td>{value.name}</td>
-      <td>{value.type}</td>
+    return <tr>
+      <td>{value.userId}</td>
+      <td>{value.id}</td>
+      <td>{value.title}</td>
     </tr>
     
-  </tbody>
+  
   }
  )
 
  }
+ </tbody>
 </table>
                 </div>
             </div>
